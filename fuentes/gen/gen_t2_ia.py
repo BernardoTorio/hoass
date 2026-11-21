@@ -102,6 +102,35 @@ def fig_piezas():
     return p
 
 
+def fig_terminal():
+    C = E.mpl_estilo()
+    fig, ax = plt.subplots(figsize=(7.4, 3.0), dpi=260)
+    ax.set_xlim(0, 110); ax.set_ylim(0, 44); ax.axis("off")
+    ax.add_patch(FancyBboxPatch((1, 2), 76, 40, boxstyle="round,pad=0.3,rounding_size=1.2", fc="#EDF0F4", ec=C["PIZARRA"], lw=2))
+    ax.text(3, 38.6, "El terminal", fontsize=10.5, fontweight="bold", color="#222", va="center")
+    ax.text(3, 34.4, "entiende órdenes exactas", fontsize=8.2, color="#333", va="center")
+    ax.text(3, 29.2, "$ cd /config\n$ git status", fontsize=8, color=C["PIZARRA"], va="center", family="Liberation Mono", linespacing=1.5)
+    ax.text(3, 22.2, "$ opencode", fontsize=8, color=C["AZUL"], va="center", family="Liberation Mono", fontweight="bold")
+    ax.annotate("", xy=(33, 22.2), xytext=(19.5, 22.2), arrowprops=dict(arrowstyle="-|>", color=C["AZUL"], lw=2))
+    ax.add_patch(FancyBboxPatch((34, 5), 40, 28, boxstyle="round,pad=0.3,rounding_size=1.2", fc="#DEEAF6", ec=C["AZUL"], lw=2))
+    ax.text(54, 29.2, "opencode", fontsize=10.5, fontweight="bold", color="#222", ha="center", va="center")
+    ax.text(54, 24.8, "un programa que se abre dentro", fontsize=8.2, color="#333", ha="center", va="center")
+    ax.text(54, 16.5, "«¿Qué ha cambiado desde\nel último commit?»", fontsize=8.4, color=C["AZUL"], ha="center", va="center",
+            style="italic", linespacing=1.4)
+    ax.text(54, 8.6, "entiende lo que le pides con tus palabras", fontsize=7.8, color="#333", ha="center", va="center")
+    ax.add_patch(FancyBboxPatch((87, 13), 22, 14, boxstyle="round,pad=0.3,rounding_size=1.2", fc="#FFF2CC", ec=C["OCRE"], lw=2))
+    ax.text(98, 22.6, "Modelo de IA", fontsize=9.6, fontweight="bold", color="#222", ha="center", va="center")
+    ax.text(98, 17.2, "en internet", fontsize=8.2, color="#333", ha="center", va="center")
+    ax.annotate("", xy=(86.4, 22), xytext=(75, 22), arrowprops=dict(arrowstyle="-|>", color=C["OCRE"], lw=2))
+    ax.annotate("", xy=(75, 17.5), xytext=(86.4, 17.5), arrowprops=dict(arrowstyle="-|>", color=C["OCRE"], lw=2))
+    ax.annotate("", xy=(20, 27.5), xytext=(33.4, 12), arrowprops=dict(arrowstyle="-|>", color=C["VERDE"], lw=1.8,
+                connectionstyle="arc3,rad=-0.25"))
+    ax.text(17.5, 12.5, "opencode escribe\nlas órdenes por ti", fontsize=7.8, color=C["VERDE"], ha="center", va="center",
+            linespacing=1.3)
+    p = FIGD + "t2_terminal.png"; fig.savefig(p, bbox_inches="tight", pad_inches=0.08, facecolor="white"); plt.close(fig)
+    return p
+
+
 def fig_git():
     C = E.mpl_estilo()
     fig, ax = plt.subplots(figsize=(7.4, 3.3), dpi=260)
@@ -148,6 +177,7 @@ def fig_flujo():
 def main():
     M.figura()
     f_piezas, f_git, f_flujo = fig_piezas(), fig_git(), fig_flujo()
+    f_term = fig_terminal()
     doc = E.nuevo_documento("Tema 2 · Configuración de IA con Home Assistant",
                             "opencode, git, MCP, skills y vibecoding",
                             titulo_corto="Tema 2 · IA con Home Assistant")
@@ -199,7 +229,39 @@ def main():
     E.cajon(doc, "¡OJO!", "En HA, **guardar un fichero no es aplicarlo**. Después de cambiar YAML hay que **comprobar la "
                           "configuración** y **recargar** (o reiniciar). Pídele a la IA que lo compruebe antes de dar nada por hecho.")
 
-    E.h2(doc, "1.3 El modelo: los gratuitos")
+    E.h2(doc, "1.3 El terminal y opencode no son lo mismo")
+    E.parrafo(doc, "Se confunden mucho porque los dos son **una pantalla de texto donde escribes**. Pero son dos cosas "
+                   "distintas, una dentro de la otra:")
+    E.lista(doc, [
+        "El **terminal** es una ventana para dar **órdenes al ordenador** escribiéndolas. El programa que las lee se "
+        "llama *shell*. Solo entiende **órdenes exactas**: una letra mal y da error.",
+        "**opencode** es un **programa** que se abre dentro del terminal (escribiendo `opencode`) o como aplicación "
+        "aparte. A él le escribes **con tus palabras**, y es él quien decide qué órdenes hacen falta y las ejecuta.",
+    ])
+    E.imagen(doc, f_term, 15.5, pie="El terminal entiende órdenes exactas; opencode, peticiones. Y opencode usa el terminal por ti.")
+    E.tabla(doc, ["", "El terminal", "opencode"], [
+        ["Qué es", "La puerta de texto del sistema", "Un programa: el agente de IA"],
+        ["Qué le escribes", "**Órdenes exactas**: `cd /config`, `git status`", "**Peticiones**: «¿qué ha cambiado desde el último commit?»"],
+        ["Quién lo entiende", "El sistema, al pie de la letra", "El modelo de IA, que interpreta lo que quieres"],
+        ["Si te equivocas", "«orden no encontrada»", "Te entiende igual… o entiende otra cosa"],
+        ["Necesita internet", "No", "Sí, para hablar con el modelo"],
+        ["Cómo sabes que estás ahí", "Una línea que acaba en `$` o `#` y espera", "Su propia pantalla, con el recuadro para escribir y el nombre del modelo"],
+    ], anchos_cm=[3.8, 6.0, 7.2], negrita_col0=True, tam=9)
+    E.cajon(doc, "¡OJO!", ["Los dos errores típicos:",
+                           "- escribir una **petición en el terminal** («hazme un dashboard»): el terminal no sabe qué es eso;",
+                           "- escribir una **orden en opencode** creyendo que se ejecuta tal cual: la IA la lee como una "
+                           "petición más y hace lo que entiende.",
+                           "Antes de escribir, mira **dónde estás**."])
+    E.tabla(doc, ["Dónde abres opencode", "Qué ves"], [
+        ["En **Home Assistant**", "La app de opencode abre un terminal dentro del navegador, en la barra lateral, y en él se arranca opencode"],
+        ["En tu **PC**, en un terminal", "Abres el terminal de Windows y escribes `opencode`"],
+        ["En tu **PC**, como aplicación", "Una ventana normal, sin terminal a la vista. Por dentro es el mismo opencode"],
+    ], anchos_cm=[5.0, 12.0], tam=9.5)
+    E.cajon(doc, "EN EL TALLER", "El terminal es el **cuadro de mando**: cada pulsador hace una cosa exacta. opencode es "
+                                 "un **operario** al que le dices lo que quieres y él pulsa por ti. Puedes pulsar tú "
+                                 "(terminal) o pedírselo (opencode); lo que no puedes es hablarle al cuadro.")
+
+    E.h2(doc, "1.4 El modelo: los gratuitos")
     E.parrafo(doc, "opencode ofrece algunos **modelos gratuitos** que se pueden usar sin pagar. En clase usamos esos. Se "
                    "eligen con `/models`.")
     E.lista(doc, [
@@ -215,7 +277,7 @@ def main():
                            "- datos personales tuyos, de tus compañeros o de tu familia;",
                            "- nada que no enseñarías en la pizarra."])
 
-    E.h2(doc, "1.4 Primeros pasos")
+    E.h2(doc, "1.5 Primeros pasos")
     E.parrafo(doc, "opencode trabaja **dentro de una carpeta**: lo que hay en ella es su «proyecto». Se entra en la "
                    "carpeta y se arranca:")
     E.bloque_codigo(doc, "cd /config        (en HA: la carpeta de configuración)\nopencode")
@@ -224,7 +286,7 @@ def main():
                                "servidores… **Casi todo nos queda fuera.** Para trabajar en clase basta con estas seis cosas:")
     E.tabla(doc, ["Escribes", "Qué hace", "Cuándo"], [
         ["`/models`", "Elegir el modelo", "Al empezar, o si el modelo falla"],
-        ["`/agents`  (o Mayús+Tab)", "Cambiar entre **Plan** y **Build** (apartado 1.5)", "Antes de cada encargo"],
+        ["`/agents`  (o Mayús+Tab)", "Cambiar entre **Plan** y **Build** (apartado 1.6)", "Antes de cada encargo"],
         ["`@fichero`", "Adjuntar un fichero a tu mensaje (por ejemplo, `@automations.yaml`)", "Para que mire justo ese fichero"],
         ["`/undo`", "Deshacer tu último mensaje **y lo que la IA hizo después**", "Cuando se ha equivocado"],
         ["`/new`", "Empezar una sesión nueva, con el contexto vacío", "Cuando se lía o cambias de tarea"],
@@ -235,7 +297,7 @@ def main():
         ("Vídeo de MoureDev, desde el minuto 31:37", V3),
     ])
 
-    E.h2(doc, "1.5 Dos agentes: Plan y Build")
+    E.h2(doc, "1.6 Dos agentes: Plan y Build")
     E.tabla(doc, ["Agente", "Qué hace", "Cuándo"], [
         ["**Plan**", "Mira, lee y **propone un plan**. No cambia tus ficheros.", "Siempre **primero**, y para preguntar o diagnosticar"],
         ["**Build**", "**Hace** los cambios: edita ficheros, ejecuta comandos, usa las herramientas.", "Cuando el plan te convence"],
@@ -244,7 +306,7 @@ def main():
                                  "ves el esquema de lo que la IA piensa hacer; si está mal, corregirlo cuesta una frase. "
                                  "Con Build ya está cableando.")
 
-    E.h2(doc, "1.6 Permisos e instrucciones")
+    E.h2(doc, "1.7 Permisos e instrucciones")
     E.lista(doc, [
         "**Permisos.** Cada acción puede estar **permitida**, **prohibida** o **con pregunta** (opencode te pide permiso "
         "antes). Cuando pregunte, **lee** qué quiere hacer: qué fichero, qué comando, qué herramienta.",
@@ -261,7 +323,7 @@ def main():
     E.hueco_captura(doc, "opencode pidiendo permiso antes de usar una herramienta o editar un fichero, con las opciones "
                          "de aceptar o rechazar a la vista", alto_cm=4.2)
 
-    E.h2(doc, "1.7 Cómo pedir las cosas")
+    E.h2(doc, "1.8 Cómo pedir las cosas")
     E.parrafo(doc, "La IA no sabe lo que tienes en la cabeza. Una buena petición dice **cuatro cosas**: qué hay, qué "
                    "quieres, qué no debe tocar y cómo se comprueba.")
     E.tabla(doc, ["Mal", "Bien"], [
@@ -632,6 +694,7 @@ def main():
     lista_num(doc, [
         "¿Qué diferencia hay entre un chat de IA y un agente? ¿Y entre opencode y el modelo?",
         "¿Qué puede ver opencode cuando está en HA y qué puede ver cuando está en tu PC?",
+        "¿Qué diferencia hay entre el terminal y opencode? Pon un ejemplo de lo que se escribe en cada uno.",
         "Di tres cosas que nunca hay que escribirle a un modelo gratuito y por qué.",
         "¿Para qué sirve el agente Plan? ¿Por qué se usa antes que Build?",
         "¿Qué hace `/undo`? ¿Y `/new`? ¿Cuándo usas cada una?",
