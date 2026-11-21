@@ -348,32 +348,65 @@ def main():
     E.cajon(doc, "¡OJO!", "`git reset --hard` **borra** los cambios sin preguntar y no se recupera lo que no estaba en un "
                           "commit. Si la IA propone usarla, **di que no** y pídele `restore` o `revert`.")
 
-    E.h2(doc, "2.6 git en Home Assistant")
-    E.parrafo(doc, "El repositorio se hace en la carpeta de configuración de HA (`/config`). Dos cosas propias de HA:")
-    E.lista(doc, [
-        "**No todo es YAML.** Lo que haces desde la interfaz (dashboards, muchas automatizaciones, ayudantes) se guarda "
-        "en la carpeta escondida `.storage`, en ficheros JSON que escribe el propio HA. git también los puede vigilar, "
-        "pero no se editan a mano: se cambian desde la interfaz o por MCP.",
-        "**Hay cosas que no se guardan nunca en git:** contraseñas, bases de datos y registros. Para eso está `.gitignore`.",
-    ])
-    E.bloque_codigo(doc, "secrets.yaml\n*.db\n*.db-shm\n*.db-wal\n*.log*\n.storage/auth*\n.cloud/\nbackups/\ntts/",
-                    titulo="Un .gitignore mínimo para /config")
-    E.cajon(doc, "EN EL TALLER", "El **reset** del aula devuelve tu VM a la instantánea `limpio`: también **borra tu "
-                                 "repositorio**, porque está dentro de la VM. Si quieres conservar el trabajo, tiene que "
-                                 "estar subido a GitHub (o copiado fuera) antes de que acabe la clase.")
+    E.h2(doc, "2.6 Qué repositorios hay")
+    E.parrafo(doc, "Cuando se habla de «el repositorio» conviene saber **de cuál**. En tu montaje hay **tres sitios** "
+                   "con repositorios, y solo uno está dentro de Home Assistant:")
+    E.tabla(doc, ["", "Dónde está", "Qué guarda", "Quién hace los commits"], [
+        ["**1. El de tu Home Assistant**", "Dentro de tu VM, en la carpeta `/config`", "La configuración de tu HA. **Es el importante**",
+         "La IA cuando se lo pides (o tú)"],
+        ["**2. Los de tu PC**", "En carpetas de tu ordenador", "Repositorios que te bajas de GitHub para mirarlos, y tus notas",
+         "Casi nunca haces commits: sobre todo **lees**"],
+        ["**3. Los de GitHub**", "En internet", "**El tuyo**: la copia del nº 1, privada. **Los de otros**: públicos, para sacar ideas",
+         "El tuyo recibe lo que subes desde el nº 1. En los de otros no escribes"],
+    ], anchos_cm=[4.0, 3.9, 5.2, 3.9], tam=9)
+    E.cajon(doc, "IDEA CLAVE", "**No se mezclan solos.** Un commit hecho en tu HA se queda en tu HA hasta que se **sube** "
+                               "a GitHub. Y lo que hay en GitHub no llega a tu HA hasta que alguien lo **baja**. Cuando la IA "
+                               "diga «he hecho commit», pregúntate: ¿en cuál de los tres?")
 
-    E.h2(doc, "2.7 GitHub: git en internet")
+    E.h2(doc, "2.7 El repositorio de tu Home Assistant")
+    E.lista(doc, [
+        "**Dónde está.** En la carpeta de configuración de HA: el historial vive en `/config/.git`. Según por dónde "
+        "entres, esa misma carpeta puede aparecer con otro nombre, `/homeassistant`: **es la misma**, no hay dos.",
+        "**Quién hace commits.** Las sesiones de opencode (la IA, cuando se lo pides) y tú. En una instalación de "
+        "verdad se suele añadir además un **commit automático cada noche**, para que nunca pase un día sin foto.",
+        "**No todo es YAML.** Lo que haces desde la interfaz (dashboards, muchas automatizaciones, ayudantes) se "
+        "guarda en la carpeta escondida `.storage`, en ficheros JSON que escribe el propio HA. git también los vigila, "
+        "pero no se editan a mano: se cambian desde la interfaz o por MCP.",
+        "**Hay cosas que se dejan fuera a propósito**, con `.gitignore`: contraseñas, bases de datos, registros y lo "
+        "que instala HACS.",
+    ])
+    E.tabla(doc, ["Se queda fuera de git", "Por qué", "Cómo se recupera"], [
+        ["`secrets.yaml` y los ficheros de acceso", "Son contraseñas y claves", "No se recuperan de git: se guardan aparte"],
+        ["Bases de datos (`*.db`) y registros (`*.log`)", "Son enormes y cambian cada segundo", "No hace falta: HA los vuelve a crear"],
+        ["Lo de HACS: `www/community/` y `custom_components/`", "Es código de otros, y ocupa mucho", "Se vuelve a instalar, o sale de una **copia de seguridad** de HA"],
+        ["Imágenes y ficheros grandes", "git está pensado para texto", "De la copia de seguridad"],
+    ], anchos_cm=[5.6, 5.2, 6.2], tam=9)
+    E.bloque_codigo(doc, "secrets.yaml\n*.db\n*.db-shm\n*.db-wal\n*.log*\n.storage/auth*\n.cloud/\nbackups/\ntts/\n"
+                         "www/community/\ncustom_components/",
+                    titulo="Un .gitignore para /config")
+
+    E.h2(doc, "2.8 GitHub: tu copia y los repositorios de otros")
     E.parrafo(doc, "**git** es el programa; **GitHub** es una web donde se guardan repositorios de git. No son lo mismo: "
-                   "git funciona sin GitHub y sin internet.")
+                   "git funciona sin GitHub y sin internet. Un repositorio guardado en GitHub se llama **remoto**.")
     E.lista(doc, [
         "**Cada alumno, su cuenta.** La cuenta de GitHub es **personal**: no se comparte. Así cada commit lleva el "
         "nombre de quien lo hizo, y la cuenta y el trabajo son tuyos cuando acabe el curso.",
-        "**Guardar tu trabajo fuera:** tu repositorio se puede **subir** a GitHub como copia. El de tu configuración "
-        "de HA, **privado**. Cómo se hace lo verás en la práctica; también lo ejecuta la IA.",
-        "**Aprovechar el de otros:** en GitHub hay miles de repositorios públicos con dashboards, tarjetas y "
-        "automatizaciones. Se pueden **leer** para sacar ideas o **copiar** a tu máquina. Lo verás en la práctica de "
-        "los dashboards.",
+        "**El remoto del grupo.** El repositorio de vuestra VM se sube a un repositorio **privado** de GitHub, al que "
+        "entráis todos los del grupo. Sirve para dos cosas: **compartir** el trabajo entre vosotros y tener una "
+        "**copia fuera de la VM**. Cómo se hace lo verás en la práctica; también lo ejecuta la IA.",
+        "**Los de otros.** En GitHub hay miles de repositorios públicos con dashboards, tarjetas y automatizaciones. "
+        "Se pueden **leer** para sacar ideas o **copiar** a tu PC. Lo verás en la práctica de los dashboards.",
     ])
+    E.cajon(doc, "¿POR QUÉ?", "**¿Siempre hay remoto?** No. En muchas casas el repositorio de `/config` **no tiene remoto** "
+                              "y nunca se sube a ningún sitio, porque la configuración de una vivienda es privada: se usa "
+                              "solo para ver el historial y volver atrás. En clase sí lo ponemos, porque trabajáis varios "
+                              "y la VM se borra.")
+    E.cajon(doc, "¡OJO!", ["**git no es una copia de seguridad.** El historial está en `.git`, **dentro de la misma VM**: "
+                           "si la VM se pierde, se pierde el repositorio con ella.",
+                           "- En el aula, el **reset** devuelve tu VM a la instantánea `limpio` y **borra también tu "
+                           "repositorio**. Lo que no esté subido a GitHub antes de acabar la clase, se pierde.",
+                           "- En una casa, la copia de verdad es la **copia de seguridad de HA guardada en otro aparato**. "
+                           "Esa copia lleva dentro todo, también la carpeta `.git` y lo de HACS."])
     E.cajon(doc, "¡OJO!", "Lo que se sube a un repositorio **público** lo ve todo el mundo, y borrarlo después no lo "
                           "borra del historial. **Antes de subir nada**, pregunta a la IA qué ficheros van a subirse y míralos.")
     videos(doc, "git es complicado y casi todo nos queda fuera. Del curso de Git y GitHub de **MoureDev** (Brais "
@@ -589,9 +622,10 @@ def main():
         "¿Cuáles son las dos órdenes de git que usamos, en qué orden van y quién las ejecuta normalmente?",
         "Mejora este mensaje de commit: «cambios varios».",
         "La IA ha estropeado `automations.yaml` y no has hecho commit. ¿Qué le pides?",
-        "¿Por qué no se guarda `secrets.yaml` en git? ¿Dónde se dice?",
+        "¿Qué tres sitios con repositorios hay en tu montaje? ¿Cuál está dentro de Home Assistant?",
+        "Di dos cosas que se dejan fuera de git en `/config`, por qué y cómo se recuperan.",
         "Si las órdenes las ejecuta la IA, ¿para qué necesitas tú entender cómo está organizado un repositorio?",
-        "¿Por qué el reset del aula también borra tu repositorio? ¿Cómo lo evitas?",
+        "¿Por qué git no es una copia de seguridad? ¿Qué pasa con tu repositorio cuando hay un reset?",
         "En clase, ¿quién es el cliente MCP y quién es el servidor MCP?",
         "Di tres cosas que la IA puede hacer con ha-mcp y no con el servidor MCP oficial de HA.",
         "¿En qué se diferencian una herramienta de MCP, una skill y el fichero `AGENTS.md`?",

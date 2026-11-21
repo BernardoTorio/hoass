@@ -33,7 +33,7 @@ def figura():
     def flecha(x1, x2, yy, txt, col, arriba=True):
         ax.annotate("", xy=(x2, yy), xytext=(x1, yy), arrowprops=dict(arrowstyle="-|>", color=col, lw=2.2))
         ax.text((x1 + x2) / 2, yy + (1.6 if arriba else -1.8), txt, ha="center",
-                va="bottom" if arriba else "top", fontsize=7.4, color=col)
+                va="bottom" if arriba else "top", fontsize=6.6, color=col)
 
     flecha(16.2, 25.8, 23, "petición", C["PIZARRA"])
     flecha(25.8, 16.2, 15, "respuesta", C["PIZARRA"], False)
