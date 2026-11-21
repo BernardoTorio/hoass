@@ -397,18 +397,36 @@ def main():
         "**Los de otros.** En GitHub hay miles de repositorios públicos con dashboards, tarjetas y automatizaciones. "
         "Se pueden **leer** para sacar ideas o **copiar** a tu PC. Lo verás en la práctica de los dashboards.",
     ])
-    E.cajon(doc, "¿POR QUÉ?", "**¿Siempre hay remoto?** No. En muchas casas el repositorio de `/config` **no tiene remoto** "
-                              "y nunca se sube a ningún sitio, porque la configuración de una vivienda es privada: se usa "
-                              "solo para ver el historial y volver atrás. En clase sí lo ponemos, porque trabajáis varios "
-                              "y la VM se borra.")
-    E.cajon(doc, "¡OJO!", ["**git no es una copia de seguridad.** El historial está en `.git`, **dentro de la misma VM**: "
-                           "si la VM se pierde, se pierde el repositorio con ella.",
-                           "- En el aula, el **reset** devuelve tu VM a la instantánea `limpio` y **borra también tu "
-                           "repositorio**. Lo que no esté subido a GitHub antes de acabar la clase, se pierde.",
-                           "- En una casa, la copia de verdad es la **copia de seguridad de HA guardada en otro aparato**. "
-                           "Esa copia lleva dentro todo, también la carpeta `.git` y lo de HACS."])
     E.cajon(doc, "¡OJO!", "Lo que se sube a un repositorio **público** lo ve todo el mundo, y borrarlo después no lo "
                           "borra del historial. **Antes de subir nada**, pregunta a la IA qué ficheros van a subirse y míralos.")
+
+    E.h2(doc, "2.9 Se puede trabajar en local")
+    E.parrafo(doc, "git **no necesita** GitHub ni internet. En muchas casas el repositorio de `/config` **no tiene "
+                   "remoto** y nunca se sube a ningún sitio, porque la configuración de una vivienda es privada. Se "
+                   "trabaja **en local**, y funciona. Pero hay que saber qué te protege y qué no.")
+    E.tabla(doc, ["Lo que te protege", "El punto débil: todo en la misma caja"], [
+        ["**git es tu máquina del tiempo.** Con el historial puedes volver a cualquier commit.",
+         "Si Home Assistant y sus copias están en el **mismo aparato** y ese aparato muere (avería, subida de tensión, "
+         "robo, un virus que lo cifra todo), **se pierde todo a la vez**."],
+        ["**La carpeta `.git` va dentro de cada copia de seguridad completa de HA.** Con una sola copia recuperas la "
+         "configuración **y todo su historial**.",
+         "Copiar `.git` a otra carpeta del mismo aparato **apenas ayuda**: sigue siendo la misma caja."],
+        ["**Trabajar directamente sobre `/config`**, sin una copia de pruebas, es lo normal en un HA de casa. Si un "
+         "cambio sale mal, se deshace con git o con una copia de seguridad.",
+         "Hace falta **al menos una copia fuera**: en otro aparato o en la nube. Y mejor en **dos sitios**: si la única "
+         "copia de fuera falla, ya no queda ninguna."],
+    ], anchos_cm=[8.5, 8.5], tam=9.5)
+    E.parrafo(doc, "Para la **configuración**, una copia de fuera basta, porque lleva el historial de git completo. Lo "
+                   "que más se pierde en un desastre es otra cosa: la **base de datos de históricos** (meses de "
+                   "temperaturas y consumos), que no está en git.")
+    E.tabla(doc, ["", "En una casa", "En el aula"], [
+        ["La «caja»", "El aparato donde está HA y, a veces, también sus copias", "Tu VM: el **reset** la devuelve a `limpio` y borra tu repositorio"],
+        ["La copia de fuera", "La copia de seguridad de HA en otro aparato o en la nube", "El **remoto privado del grupo** en GitHub"],
+        ["Si no la tienes", "Un fallo del aparato y lo pierdes todo", "Acaba la clase y lo pierdes todo"],
+    ], anchos_cm=[3.4, 6.8, 6.8], negrita_col0=True, tam=9.5)
+    E.cajon(doc, "IDEA CLAVE", "**git no es una copia de seguridad: es el historial.** Te salva de un cambio malo, no de "
+                               "perder la máquina. Para eso hace falta que el historial esté **también en otro sitio**.")
+
     videos(doc, "git es complicado y casi todo nos queda fuera. Del curso de Git y GitHub de **MoureDev** (Brais "
                 "Moure), que dura cinco horas, **solo necesitas una lección**: la 8, donde explica `git add` y "
                 "`git commit`. Es lo único que usamos, y aun así lo ejecuta la IA; verla te sirve para entender qué "
@@ -625,6 +643,7 @@ def main():
         "¿Qué tres sitios con repositorios hay en tu montaje? ¿Cuál está dentro de Home Assistant?",
         "Di dos cosas que se dejan fuera de git en `/config`, por qué y cómo se recuperan.",
         "Si las órdenes las ejecuta la IA, ¿para qué necesitas tú entender cómo está organizado un repositorio?",
+        "¿Se puede usar git sin GitHub? ¿Qué te protege trabajando en local y cuál es el punto débil?",
         "¿Por qué git no es una copia de seguridad? ¿Qué pasa con tu repositorio cuando hay un reset?",
         "En clase, ¿quién es el cliente MCP y quién es el servidor MCP?",
         "Di tres cosas que la IA puede hacer con ha-mcp y no con el servidor MCP oficial de HA.",
