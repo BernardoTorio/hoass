@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var t=localStorage.getItem('tema');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<title>Home Assistant · Domótica 2MT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f1;--card:#fff;--ink:#1d2320;--muted:#5d6862;--line:#d9e0d4;--green:#4e8a1e;--green-soft:#e6f2da;--btn:#eef2ea;--blue:#1f5fbf}
+:root[data-theme="dark"]{--bg:#141816;--card:#1e2420;--ink:#e7ece8;--muted:#a3ada6;--line:#34403a;--green:#8bc34a;--green-soft:#24331b;--btn:#262e29;--blue:#7aa7f0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1e2420;--ink:#e7ece8;--muted:#a3ada6;--line:#34403a;--green:#8bc34a;--green-soft:#24331b;--btn:#262e29;--blue:#7aa7f0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",Verdana,Arial,sans-serif;font-size:17px;line-height:1.45}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--card);border-bottom:3px solid var(--green);position:sticky;top:0;z-index:5}
+.crumbs{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumbs b{color:var(--ink)}
+.theme{border:1px solid var(--line);background:var(--btn);color:var(--ink);width:38px;height:34px;border-radius:8px;cursor:pointer;display:grid;place-items:center}
+main{max-width:1000px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:clamp(1.4rem,3vw,1.9rem);margin:6px 0 4px;line-height:1.15}h1 span{color:var(--green)}
+.sub{color:var(--muted);margin:0 0 6px;max-width:75ch}
+h2{font-size:1.15rem;margin:26px 0 10px;padding:6px 12px;background:var(--green-soft);border-left:6px solid var(--green);border-radius:4px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.c{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.c:hover{border-color:var(--green)}
+.c .n{flex:none;background:var(--green);color:#fff;font-weight:700;border-radius:8px;padding:8px 8px;min-width:56px;text-align:center}
+:root[data-theme="dark"] .c .n{color:#10200a}
+.c h3{font-size:1.02rem;margin:0 0 2px}.c p{margin:0;color:var(--muted);font-size:.9rem}
+.foot{color:var(--muted);font-size:.88rem;margin-top:26px}
+</style>
+</head>
+<body>
+<header class="top">
+  <nav class="crumbs"><b>Home Assistant</b> · Instalaciones Domóticas · 2MT</nav>
+  <button class="theme" id="theme" title="Modo claro / oscuro" aria-label="Cambiar modo claro u oscuro"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+</header>
+<main>
+<h1>Home Assistant · <span>Domótica 2MT</span></h1>
+<p class="sub">Apuntes, hojas, prácticas y tests del bloque de Home Assistant. I.E.S. Trinidad Arroyo (Palencia).</p>
+
+<h2 id="tema1">Tema 1 · Home Assistant</h2>
+<div class="cards">
+<a class="c" href="tema1/2MT-HA-teoria.pdf"><div class="n">PDF</div><div><h3>Teoría: Home Assistant y MQTT</h3><p>Qué es, cómo está hecho por dentro, sus piezas y el protocolo MQTT.</p></div></a>
+<a class="c" href="tema1/2MT-HA-servidor.pdf"><div class="n">PDF</div><div><h3>Nuestro servidor de prácticas</h3><p>El mini-PC, Proxmox, las máquinas virtuales y los dispositivos virtuales.</p></div></a>
+<a class="c" href="tema1/2MT-HA-P1.pdf"><div class="n">P1</div><div><h3>Práctica 1 · Dashboard del tiempo</h3><p>Un dashboard nuevo con el tiempo y la hora con segundos. Sin IA.</p></div></a>
+</div>
+
+<h2 id="tema2">Tema 2 · Configuración de IA con Home Assistant</h2>
+<div class="cards">
+<a class="c" href="tema2/2MT-HA-T2-ia.pdf"><div class="n">PDF</div><div><h3>opencode, git, MCP, skills y vibecoding</h3><p>Las cinco piezas para trabajar con IA en Home Assistant sin romper nada.</p></div></a>
+</div>
+
+<h2 id="hojas">Hojas</h2>
+<div class="cards">
+<a class="c" href="hojas/2MT-HA-hoja1-tu-home-assistant.pdf"><div class="n">H1</div><div><h3>Tu Home Assistant</h3><p>Cómo entrar, normas y qué dispositivos tienes.</p></div></a>
+<a class="c" href="hojas/2MT-HA-hoja2-chuleta-mqtt.pdf"><div class="n">H2</div><div><h3>Chuleta MQTT</h3><p>Órdenes para los dispositivos virtuales.</p></div></a>
+</div>
+
+<h2 id="tests">Tests</h2>
+<div class="cards">
+<a class="c" href="test_ha.html"><div class="n">T1</div><div><h3>Test del Tema 1</h3><p>100 preguntas de Home Assistant, MQTT, nuestro servidor y la Práctica 1.</p></div></a>
+</div>
+<p class="foot">Los PDF se abren o se descargan según tu navegador.</p>
+</main>
+<script>
+(function(){var r=document.documentElement;document.getElementById('theme').onclick=function(){var d=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=d?'light':'dark';try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}};})();
+</script>
+</body>
+</html>

@@ -11,14 +11,18 @@ Material de clase del bloque de **Home Assistant** del módulo de Instalaciones 
 
 Hojas sueltas: [`hojas/2MT-HA-hoja1-tu-home-assistant.pdf`](hojas/2MT-HA-hoja1-tu-home-assistant.pdf) (cómo entrar, normas y dispositivos) y [`hojas/2MT-HA-hoja2-chuleta-mqtt.pdf`](hojas/2MT-HA-hoja2-chuleta-mqtt.pdf) (chuleta MQTT de los dispositivos virtuales).
 
+Tests: [`test_ha.html`](test_ha.html), 100 preguntas del Tema 1 (Home Assistant, MQTT, nuestro servidor y la Práctica 1), con el mismo motor que los tests de la web de Domótica. `index.html` es una portada sencilla con todo.
+
 ## Estructura
 
 ```
 tema1/      Tema 1 en PDF (teoría, servidor, práctica 1)
 tema2/      Tema 2 en PDF (y sus prácticas, cuando estén)
 hojas/      hojas de una cara para tener al lado del ordenador
+index.html  portada: temas, hojas y tests
+test_ha.html  test del Tema 1 (se queda en la raíz)
 fuentes/    de dónde salen los documentos: estilo_ha.py (estilo común de los Word),
-            gen/ (un generador por documento) y fig/ (figuras)
+            gen/ (un generador por documento), fig/ (figuras) y test/ (preguntas y montaje del test)
 ```
 
 ## Normas de este repositorio

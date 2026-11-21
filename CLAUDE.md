@@ -21,3 +21,8 @@ Material de clase del bloque de Home Assistant: Tema 1 (Home Assistant y MQTT) y
 - Modelos gratuitos de opencode; opencode en la VM de Home Assistant y en el PC del alumno.
 - Una cuenta de GitHub por alumno.
 - Servidor MCP: ha-mcp por ahora; el oficial de Home Assistant es reciente y mejora rápido.
+
+## Web y tests
+- `index.html` es la portada (Tema 1, Tema 2, Hojas y Tests, con `#tema1`, `#tema2`, `#hojas` y `#tests`). Solo se ve como web si se activa GitHub Pages en el repositorio.
+- `test_ha.html` (raíz): test del Tema 1, 100 preguntas, con el motor de `test_bloque2.html` de la web de Domótica; vuelve a `index.html#tests`. Las preguntas están en `fuentes/test/preguntas.py` y el montaje en `fuentes/test/build.py` (necesita una copia de `test_bloque2.html`). Reglas: 25 buenas de cada letra, sin tres iguales seguidas, y la buena no es casi siempre la más larga.
+- El mismo test está también en la web provisional (`BernardoTorio/provisional`, `test_ha.html`).
