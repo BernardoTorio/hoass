@@ -6,7 +6,7 @@ Material de clase del bloque de Home Assistant: Tema 1 (Home Assistant y MQTT) y
 - Nada del **profesorado**: soluciones, credenciales, inventario, operación del servidor. Las contraseñas solo están en las hojas del profesorado, fuera de git.
 - **Ningún dato personal** del profesor ni de los alumnos. La casa que sirve de modelo es «una vivienda real»: no se dice de quién es ni dónde está.
 - Ni `.docx` ni `.zip` (están en `.gitignore`). Los documentos van **solo en PDF**.
-- Antes de subir un documento con las direcciones internas del aula, preguntar al profesor.
+- Las direcciones internas del aula (`10.202.51.x`, `192.168.100.x`) **sí** se pueden publicar (lo decidió el profesor el 21/11/2026). Las de casa, el acceso al servidor (SSH, Proxmox) y los comandos del host, **no**: son del profesorado.
 
 ## Cómo son los documentos
 - Alumnos de FP de grado medio (16-17 años): lenguaje sencillo, sin fórmulas, frases cortas. Español de España.

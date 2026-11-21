@@ -1167,6 +1167,6 @@ if __name__ == "__main__":
           [["121", "ha-alumno01", "192.0.2.81"], ["128", "aula-mqtt", "192.0.2.88"]],
           anchos_cm=[2, 6, 9], mono_cols=(1, 2))
     cajon(doc2, "¡OJO!", "Esta hoja no se deja nunca a la vista del alumnado.")
-    bloque_codigo(doc2, "bash /root/reset-aula.sh")
+    bloque_codigo(doc2, "comando de ejemplo")
     ruta2 = guardar(doc2, os.path.join(out, "demo-estilo-confidencial.docx"))
     print("PDF:", a_pdf(ruta2))
