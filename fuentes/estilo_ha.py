@@ -15,7 +15,7 @@ Uso mínimo:
     import estilo_ha as E
     doc = E.nuevo_documento("Tu Home Assistant", "Hoja 1 · Cómo entrar y normas")
     E.h1(doc, "1. Cómo entrar")
-    E.parrafo(doc, "Abre el navegador y escribe `http://10.202.51.81`. **Sin** `:8123`.")
+    E.parrafo(doc, "Abre el navegador y escribe `http://192.0.2.81`. **Sin** `:8123`.")
     E.cajon(doc, "¡OJO!", "El **reset** lo borra todo: haz capturas antes.")
     E.guardar(doc, "/ruta/2MT-HA-hoja1-tu-home-assistant.docx")
     E.a_pdf("/ruta/2MT-HA-hoja1-tu-home-assistant.docx")
@@ -1113,7 +1113,7 @@ if __name__ == "__main__":
                           titulo_corto="Demo · estilo común")
     h1(doc, "1. Texto")
     parrafo(doc, "Párrafo normal justificado con **negrita**, *cursiva* y `código` en línea, "
-                 "por ejemplo la entidad `cover.p_cocina` o la dirección **`http://10.202.51.81`**. "
+                 "por ejemplo la entidad `cover.p_cocina` o la dirección **`http://192.0.2.81`**. "
                  "Las comillas son «españolas». Un asterisco suelto se escribe con barra: 2 \\* 3.")
     h2(doc, "1.1. Listas")
     lista(doc, ["Primer punto con **negrita**.", "Segundo punto con `light.tira_rgb`.",
@@ -1131,7 +1131,7 @@ if __name__ == "__main__":
     h1(doc, "3. Tablas")
     tabla(doc, ["Grupo", "Usuario", "VM", "Dirección"],
           ["Grupos del aula"] +
-          [[f"Grupo {n}", f"user{n}", f"ha-alumno0{n} ({120 + n})", f"http://10.202.51.8{n}"] for n in range(1, 7)],
+          [[f"Grupo {n}", f"user{n}", f"ha-alumno0{n} ({120 + n})", f"http://192.0.2.8{n}"] for n in range(1, 7)],
           anchos_cm=[2.5, 2.5, 5.0, 7.0], mono_cols=(1, 3), negrita_col0=True)
     tabla(doc, ["Nombre", "Tipo", "Imita a", "Comportamiento"],
           [["`p_cocina`, `p_hab1`, `p_pc`", "persiana", "módulo TS130F",
@@ -1152,7 +1152,7 @@ if __name__ == "__main__":
     imagen(doc, png, 15, pie="Del simulador a tu Home Assistant (figura de prueba con mpl_estilo()).")
     hueco_captura(doc, "Ajustes → Dispositivos y servicios → MQTT con los 13 dispositivos del kit", alto_cm=5)
     h2(doc, "5.1. Tarjetas recortables")
-    recortable(doc, [f"**Grupo {n}**\nUsuario: `user{n}`\nDirección: `http://10.202.51.8{n}`" for n in range(1, 5)],
+    recortable(doc, [f"**Grupo {n}**\nUsuario: `user{n}`\nDirección: `http://192.0.2.8{n}`" for n in range(1, 5)],
                alto_cm=2.4)
     hueco_captura(doc, "Dashboard terminado con el tiempo y la hora con segundos", alto_cm=4)
     capturas(doc, escribir=True)
@@ -1164,7 +1164,7 @@ if __name__ == "__main__":
                            confidencial=True, titulo_corto="Demo · confidencial")
     h1(doc2, "Inventario")
     tabla(doc2, ["ID", "Nombre", "IP instituto"],
-          [["121", "ha-alumno01", "10.202.51.81"], ["128", "aula-mqtt", "10.202.51.88"]],
+          [["121", "ha-alumno01", "192.0.2.81"], ["128", "aula-mqtt", "192.0.2.88"]],
           anchos_cm=[2, 6, 9], mono_cols=(1, 2))
     cajon(doc2, "¡OJO!", "Esta hoja no se deja nunca a la vista del alumnado.")
     bloque_codigo(doc2, "bash /root/reset-aula.sh")

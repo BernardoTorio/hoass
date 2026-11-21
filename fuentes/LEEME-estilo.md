@@ -8,10 +8,10 @@ import estilo_ha as E
 doc = E.nuevo_documento("Tu Home Assistant", "Hoja 1 · Cómo entrar y normas",
                         titulo_corto="Hoja 1 · Tu Home Assistant")   # confidencial=True → banda roja
 E.h1(doc, "1. Cómo entrar")
-E.parrafo(doc, "Escribe en el navegador **la dirección de tu grupo**, por ejemplo `http://10.202.51.81`.")
+E.parrafo(doc, "Escribe en el navegador **la dirección de tu grupo**, por ejemplo `http://192.0.2.81`.")
 E.lista(doc, ["Abre el navegador.", "Escribe la dirección.", ["subpunto"]], numerada=True)
 E.cajon(doc, "¡OJO!", ["El **reset** lo borra todo.", "- Haz capturas antes."])
-E.tabla(doc, ["Grupo", "Dirección"], [["Grupo 1", "http://10.202.51.81"]], anchos_cm=[4, 13], mono_cols=(1,))
+E.tabla(doc, ["Grupo", "Dirección"], [["Grupo 1", "http://192.0.2.81"]], anchos_cm=[4, 13], mono_cols=(1,))
 E.bloque_codigo(doc, 'virtual/e_tv/set                              TOGGLE')
 E.hueco_captura(doc, "Pantalla de inicio de sesión de HA", alto_cm=5)
 E.capturas(doc, escribir=True)            # lista de capturas al final (y la devuelve)
