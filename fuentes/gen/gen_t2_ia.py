@@ -159,7 +159,7 @@ def main():
         ["1. opencode", "Qué es un agente de IA, cómo se usa opencode en HA y en tu PC, y cómo pedirle las cosas."],
         ["2. git", "Guardar versiones de tu configuración con *commits* y volver atrás cuando algo se rompe."],
         ["3. MCP", "Cómo se conecta la IA con Home Assistant y qué servidor MCP usamos."],
-        ["4. Uso de skills", "Qué es una *skill*, cómo la usa la IA y cómo se añaden."],
+        ["4. Uso de skills", "Qué es una *skill*, en qué se diferencia de un fichero Markdown normal y cómo la usa la IA."],
         ["5. Vibecoding", "Qué es, qué riesgos tiene y las buenas prácticas para trabajar con cabeza."],
     ], anchos_cm=[3.6, 13.4], negrita_col0=True)
     E.nota(doc, "Qué es una entidad, un dashboard o una automatización está en el Tema 1 («Teoría: Home Assistant y MQTT»). "
@@ -420,7 +420,40 @@ def main():
                               "de buenas prácticas de ha-mcp) y nos basta con entender **qué son** y **cuándo las usa la "
                               "IA**, para saber pedírselo y notar cuándo se la ha saltado.")
 
-    E.h2(doc, "4.2 Cómo es por dentro")
+    E.h2(doc, "4.2 Markdown: el formato en el que se escribe todo")
+    E.parrafo(doc, "**Markdown** es una forma de escribir **texto con formato usando solo caracteres normales**: una "
+                   "almohadilla para un título, dos asteriscos para la negrita, un guion para una lista. Los ficheros "
+                   "acaban en `.md`. Es el formato que usan las IA para casi todo: las respuestas de opencode, el "
+                   "`AGENTS.md`, los `README.md` de GitHub… y también las skills (`SKILL.md`).")
+    E.tabla(doc, ["Escribes", "Sirve para"], [
+        ["# Título      ## Apartado", "Títulos (más almohadillas, título más pequeño)"],
+        ["**negrita**      *cursiva*", "Resaltar"],
+        ["- una cosa", "Lista con viñetas"],
+        ["1. primer paso", "Lista numerada: pasos en orden"],
+        ["\\`cover.p_cocina\\`", "Código o nombres exactos (entre acentos graves)"],
+        ["[texto](https://…)", "Un enlace"],
+    ], anchos_cm=[6.2, 10.8], mono_cols=(0,))
+    E.parrafo(doc, "No hace falta aprenderlo de memoria: se lee igual de bien sin saberlo, y la IA lo escribe sola. "
+                   "Lo importante es otra cosa: **un fichero Markdown cualquiera no es una skill**.")
+    E.tabla(doc, ["", "Un `.md` normal", "`AGENTS.md`", "Una skill (`SKILL.md`)"], [
+        ["Qué es", "Un documento: apuntes, notas, un `README.md`", "Las normas de tu proyecto", "Las instrucciones de un tipo de tarea"],
+        ["Para quién", "Para personas (y para la IA, si se lo das)", "Para la IA", "Para la IA"],
+        ["Cuándo lo lee la IA", "**Solo si se lo das**: con `@fichero` o pidiéndole que lo lea", "**Siempre**, al empezar la sesión",
+         "**Sola**, cuando tu petición encaja con su descripción"],
+        ["Qué necesita", "Nada especial", "Llamarse así y estar en la carpeta del proyecto", "Una **cabecera con descripción** y estar en la **carpeta de skills**"],
+        ["Ejemplo", "Notas de cómo está montada tu casa", "«No toques la integración MQTT»", "«Cómo revisar una automatización»"],
+    ], anchos_cm=[3.0, 4.8, 4.2, 5.0], negrita_col0=True, tam=9)
+    E.cajon(doc, "IDEA CLAVE", "**Toda skill es un fichero Markdown, pero no todo fichero Markdown es una skill.** Lo que "
+                               "convierte un `.md` en skill es la **cabecera** (con su descripción) y el **sitio** donde "
+                               "está. Sin eso, es solo un documento: la IA no lo usará si tú no se lo das.")
+    E.cajon(doc, "PISTA", "La IA **no recuerda** la sesión anterior. Al terminar, pídele que deje en un fichero `.md` un "
+                          "resumen de lo hecho y de lo que falta. La próxima vez se lo adjuntas con `@` y sigue donde lo dejó.")
+    videos(doc, "En el curso de Git y GitHub de **MoureDev** hay una lección corta sobre Markdown. Es la única otra "
+                "parte de ese curso que te puede servir aquí.", [
+        ("Lección 40 · Markdown en GitHub (minuto 3:56:53, unos cuatro minutos)", t(GIT, 3, 56, 53)),
+    ])
+
+    E.h2(doc, "4.3 Cómo es una skill por dentro")
     E.bloque_codigo(doc, "---\n"
                          "name: Revisar una automatización\n"
                          "description: Revisa una automatización de Home Assistant antes de darla por buena\n"
@@ -440,7 +473,7 @@ def main():
         "opencode también lee las carpetas `.claude/skills` y `.agents/skills`, así que las skills hechas para otros "
         "agentes le valen.",
     ])
-    E.h2(doc, "4.3 Cómo se usa")
+    E.h2(doc, "4.4 Cómo se usa")
     E.lista(doc, [
         "**Sola.** En cada paso, la IA ve la lista de skills (nombre y descripción). Si tu petición encaja con una, la "
         "carga y sigue sus pasos.",
@@ -449,7 +482,7 @@ def main():
         "**Con permiso.** Como todo en opencode, cada skill puede estar permitida, prohibida o con pregunta.",
     ], numerada=True)
 
-    E.h2(doc, "4.4 Las skills de Home Assistant")
+    E.h2(doc, "4.5 Las skills de Home Assistant")
     E.parrafo(doc, "El servidor **ha-mcp** trae ya una **guía de buenas prácticas de Home Assistant**. La IA la consulta "
                    "con la herramienta `ha_get_skill_guide` antes de crear o cambiar automatizaciones, scripts o "
                    "dashboards. Algunas de las cosas que enseña:")
@@ -463,7 +496,7 @@ def main():
     E.cajon(doc, "PISTA", "Si la IA hace algo raro en HA (una plantilla enrevesada, un valor escrito a fuego), pregúntale: "
                           "«¿has consultado la guía de buenas prácticas?». Muchas veces se la ha saltado.")
 
-    E.h2(doc, "4.5 Skills de otros y skills tuyas")
+    E.h2(doc, "4.6 Skills de otros y skills tuyas")
     E.lista(doc, [
         "**De otros.** Hay colecciones públicas de skills en GitHub. Para usar una, se **copia su carpeta** a "
         "`.opencode/skills/`.",
@@ -562,6 +595,7 @@ def main():
         "En clase, ¿quién es el cliente MCP y quién es el servidor MCP?",
         "Di tres cosas que la IA puede hacer con ha-mcp y no con el servidor MCP oficial de HA.",
         "¿En qué se diferencian una herramienta de MCP, una skill y el fichero `AGENTS.md`?",
+        "¿Qué es Markdown? ¿Qué le falta a un fichero `.md` normal para ser una skill?",
         "¿Por qué es tan importante la descripción de una skill?",
         "¿Qué hay que hacer antes de instalar una skill de otra persona? ¿Por qué?",
         "¿Qué es el vibecoding? Di dos situaciones en las que vale y dos en las que no.",
