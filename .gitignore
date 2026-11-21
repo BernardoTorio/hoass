@@ -1,0 +1,9 @@
+# Nunca se suben: lo del profesorado, los Word, los zip y las salidas de trabajo
+profesorado/
+**/profesorado/
+*.docx
+*.zip
+*.xlsx
+Claude outputs/
+__pycache__/
+*.pyc
