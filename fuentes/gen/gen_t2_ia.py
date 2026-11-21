@@ -219,19 +219,21 @@ def main():
     E.parrafo(doc, "opencode trabaja **dentro de una carpeta**: lo que hay en ella es su «proyecto». Se entra en la "
                    "carpeta y se arranca:")
     E.bloque_codigo(doc, "cd /config        (en HA: la carpeta de configuración)\nopencode")
-    E.parrafo(doc, "Después escribes lo que quieres, con tus palabras, y pulsas **Intro**. Órdenes útiles:")
-    E.tabla(doc, ["Escribes", "Qué hace"], [
-        ["`/connect`", "Conectar un proveedor de modelos"],
-        ["`/models`", "Elegir el modelo"],
-        ["`/agents`  (o Mayús+Tab)", "Cambiar de agente: **Plan** o **Build** (apartado 1.5)"],
-        ["`/new`", "Empezar una sesión nueva, con el contexto vacío"],
-        ["`/sessions`", "Volver a una sesión anterior"],
-        ["`/undo`  y  `/redo`", "Deshacer tu último mensaje **y lo que la IA hizo después**; rehacerlo"],
-        ["`/btw pregunta`", "Una pregunta de paso, que no se añade a la conversación"],
-        ["`@fichero`", "Adjuntar un fichero a tu mensaje (por ejemplo, `@automations.yaml`)"],
-        ["`!` al principio", "Modo comando: ejecutar tú una orden del terminal (por ejemplo, `git status`). Esc para salir"],
-        ["Ctrl+P", "La paleta con todas las acciones"],
-    ], anchos_cm=[5.0, 12.0], mono_cols=())
+    E.parrafo(doc, "Después escribes lo que quieres, con tus palabras, y pulsas **Intro**.")
+    E.cajon(doc, "IDEA CLAVE", "opencode tiene **muchísimas** opciones: agentes a medida, órdenes propias, temas, "
+                               "servidores… **Casi todo nos queda fuera.** Para trabajar en clase basta con estas seis cosas:")
+    E.tabla(doc, ["Escribes", "Qué hace", "Cuándo"], [
+        ["`/models`", "Elegir el modelo", "Al empezar, o si el modelo falla"],
+        ["`/agents`  (o Mayús+Tab)", "Cambiar entre **Plan** y **Build** (apartado 1.5)", "Antes de cada encargo"],
+        ["`@fichero`", "Adjuntar un fichero a tu mensaje (por ejemplo, `@automations.yaml`)", "Para que mire justo ese fichero"],
+        ["`/undo`", "Deshacer tu último mensaje **y lo que la IA hizo después**", "Cuando se ha equivocado"],
+        ["`/new`", "Empezar una sesión nueva, con el contexto vacío", "Cuando se lía o cambias de tarea"],
+        ["`/connect`", "Conectar un proveedor de modelos", "Solo en la puesta en marcha"],
+    ], anchos_cm=[4.4, 7.6, 5.0])
+    videos(doc, "En el canal **MoureDev** (Brais Moure) hay un vídeo sobre esto. **No hace falta verlo entero**: "
+                "mira solo la parte enlazada, que es la que usamos.", [
+        ("Vídeo de MoureDev, desde el minuto 31:37", V3),
+    ])
 
     E.h2(doc, "1.5 Dos agentes: Plan y Build")
     E.tabla(doc, ["Agente", "Qué hace", "Cuándo"], [
@@ -283,6 +285,12 @@ def main():
     E.cajon(doc, "¿POR QUÉ?", "**¿Por qué con IA es imprescindible?** Porque la IA puede cambiar veinte líneas en tres "
                               "ficheros en cinco segundos. Sin git, si algo deja de funcionar, no sabes qué ha tocado ni "
                               "cómo estaba antes. Con git lo ves línea a línea y lo deshaces con una orden.")
+    E.cajon(doc, "IDEA CLAVE", ["**¿Cuánto git vamos a usar? Muy poco.** git es un programa enorme y complicado "
+                                "(ramas, fusiones, conflictos…) y casi todo **nos queda muy fuera**. En clase:",
+                                "- usamos solo **dos órdenes**: `git add` y `git commit`;",
+                                "- y casi siempre **las ejecuta la IA**: tú se lo pides («guarda un commit con lo que funciona»).",
+                                "Lo que sí tienes que entender es **cómo está organizado** un repositorio, para saber "
+                                "**consultar** el historial y **volver a una versión anterior** cuando haga falta."])
     E.h2(doc, "2.2 Las palabras de git")
     E.tabla(doc, ["Palabra", "Qué es"], [
         ["Repositorio (*repo*)", "Una carpeta vigilada por git, con todo su historial. El historial vive en la subcarpeta escondida `.git`."],
@@ -291,9 +299,7 @@ def main():
         ["Historial (*log*)", "La lista de commits, del más nuevo al más viejo."],
         ["Diferencia (*diff*)", "Qué líneas se han añadido, quitado o cambiado."],
         ["`.gitignore`", "Fichero con la lista de lo que git **no** debe guardar (contraseñas, bases de datos, registros)."],
-        ["Rama (*branch*)", "Una línea de trabajo paralela, para probar sin tocar lo que funciona. La principal se llama `main`."],
         ["Remoto", "Una copia del repositorio en otro sitio, normalmente en **GitHub**."],
-        ["*Clone*, *push*, *pull*", "Copiar un repositorio remoto a tu máquina; subir tus commits al remoto; bajar los que haya nuevos."],
     ], anchos_cm=[4.4, 12.6], negrita_col0=True)
     E.imagen(doc, f_git, 17, pie="Por dónde pasa un cambio: tu carpeta, lo preparado, el repositorio y GitHub.")
 
@@ -309,37 +315,36 @@ def main():
     E.cajon(doc, "IDEA CLAVE", "**Commits pequeños y frecuentes.** Un commit por cada cosa que funciona. Si haces uno solo "
                                "al final de la clase con todo junto, cuando algo falle no sabrás en qué cambio se rompió.")
 
-    E.h2(doc, "2.4 Las órdenes que vas a usar")
+    E.h2(doc, "2.4 Las dos órdenes que usamos")
     E.tabla(doc, ["Orden", "Qué hace"], [
-        ["`git init`", "Convierte la carpeta en un repositorio (una sola vez)"],
-        ["`git config user.name \"Tu nombre\"`", "Dice a git quién eres (también `user.email`); sale en cada commit"],
-        ["`git status`", "Qué ha cambiado desde el último commit. **Úsala todo el rato**"],
-        ["`git diff`", "Enseña los cambios línea a línea"],
-        ["`git add fichero`  ·  `git add .`", "Prepara un fichero, o todos los cambios"],
-        ["`git commit -m \"mensaje\"`", "Hace la foto de lo preparado, con su mensaje"],
-        ["`git log --oneline`", "El historial, un commit por línea"],
-        ["`git restore fichero`", "Tira los cambios de un fichero y lo deja como en el último commit"],
-        ["`git revert a3f9c21`", "Deshace un commit **haciendo otro nuevo** que lo anula (no borra historia)"],
-    ], anchos_cm=[6.6, 10.4])
-    E.bloque_codigo(doc, "git status                                   (¿está todo guardado?)\n"
-                         "git add .\n"
-                         "git commit -m \"Antes de pedir el dashboard de persianas\"\n"
-                         "      ... ahora trabaja la IA ...\n"
-                         "git status                                   (¿qué ficheros ha tocado?)\n"
-                         "git diff                                     (¿qué ha cambiado exactamente?)\n"
-                         "git add .\n"
-                         "git commit -m \"Añade dashboard de persianas del grupo 3\"",
-                    titulo="Una sesión normal en la carpeta /config de tu HA")
-    E.hueco_captura(doc, "Terminal de HA con la salida de «git log --oneline» mostrando varios commits del grupo con "
-                         "mensajes claros", alto_cm=3.6)
+        ["`git add .`", "**Prepara** todos los cambios para la próxima foto"],
+        ["`git commit -m \"mensaje\"`", "**Hace la foto** de lo preparado, con su mensaje"],
+    ], anchos_cm=[5.6, 11.4])
+    E.parrafo(doc, "Van siempre juntas y en ese orden: primero preparar, después la foto. Normalmente no las escribes "
+                   "tú: **se lo pides a la IA** y ella las ejecuta. Tú lees lo que va a hacer y dices que sí.")
+    E.bloque_codigo(doc, "Tú:  Antes de empezar, guarda un commit con lo que hay ahora.\n"
+                         "IA:  git add .\n"
+                         "     git commit -m \"Antes de pedir el dashboard de persianas\"\n\n"
+                         "       ... la IA hace el dashboard y tú compruebas que funciona ...\n\n"
+                         "Tú:  Funciona. Guarda un commit que diga lo que has hecho.\n"
+                         "IA:  git add .\n"
+                         "     git commit -m \"Añade dashboard de persianas del grupo 3\"",
+                    titulo="Una sesión normal: tú pides y la IA ejecuta")
+    E.hueco_captura(doc, "opencode en el terminal de HA ejecutando «git add .» y «git commit» después de pedírselo, "
+                         "con el mensaje del commit a la vista", alto_cm=3.6)
 
-    E.h2(doc, "2.5 Volver atrás")
-    E.tabla(doc, ["Situación", "Qué haces"], [
-        ["La IA ha estropeado un fichero y **aún no has hecho commit**", "`git restore fichero` (o `/undo` en opencode)"],
-        ["Quieres deshacer **un commit ya hecho**", "`git revert` con su identificador"],
-        ["Quieres ver cómo estaba algo hace tres commits", "`git log --oneline` y `git diff` entre commits"],
-        ["No sabes qué ha pasado", "`git status` y `git diff` **antes de tocar nada más**"],
-    ], anchos_cm=[8.6, 8.4])
+    E.h2(doc, "2.5 Consultar y volver atrás")
+    E.parrafo(doc, "Aquí es donde hace falta **entender la estructura**: como cada commit es una foto con su mensaje "
+                   "y su identificador, puedes pedirle a la IA que mire o recupere cualquiera de ellas.")
+    E.tabla(doc, ["Lo que quieres", "Lo que le pides a la IA", "Lo que ella usa"], [
+        ["Saber qué ha cambiado desde la última foto", "«¿Qué ficheros has tocado? Enséñame los cambios.»", "`git status`, `git diff`"],
+        ["Ver las fotos que hay", "«Enséñame el historial de commits.»", "`git log --oneline`"],
+        ["Ver cómo estaba algo antes", "«¿Cómo era el dashboard en el commit a3f9c21?»", "`git show`, `git diff`"],
+        ["Tirar un cambio que **aún no** tiene commit", "«Deja `automations.yaml` como en el último commit.»", "`git restore`"],
+        ["Deshacer un commit **ya hecho**", "«Deshaz el commit a3f9c21 con un commit nuevo.»", "`git revert`"],
+    ], anchos_cm=[5.2, 7.6, 4.2], tam=9)
+    E.cajon(doc, "PISTA", "Por eso importan los **mensajes claros**: dentro de dos semanas, «el commit del dashboard de "
+                          "persianas» se encuentra; «cambios» no.")
     E.cajon(doc, "¡OJO!", "`git reset --hard` **borra** los cambios sin preguntar y no se recupera lo que no estaba en un "
                           "commit. Si la IA propone usarla, **di que no** y pídele `restore` o `revert`.")
 
@@ -363,26 +368,19 @@ def main():
     E.lista(doc, [
         "**Cada alumno, su cuenta.** La cuenta de GitHub es **personal**: no se comparte. Así cada commit lleva el "
         "nombre de quien lo hizo, y la cuenta y el trabajo son tuyos cuando acabe el curso.",
-        "**Subir tu trabajo:** se crea un repositorio en GitHub, se enlaza como remoto y se sube con `git push`. El de "
-        "tu configuración de HA, **privado**.",
+        "**Guardar tu trabajo fuera:** tu repositorio se puede **subir** a GitHub como copia. El de tu configuración "
+        "de HA, **privado**. Cómo se hace lo verás en la práctica; también lo ejecuta la IA.",
         "**Aprovechar el de otros:** en GitHub hay miles de repositorios públicos con dashboards, tarjetas y "
-        "automatizaciones. Se pueden **leer** para sacar ideas, **clonar** (`git clone`) para tenerlos en tu máquina o "
-        "hacer un **fork** (tu propia copia en GitHub). Lo verás en la práctica de los dashboards.",
+        "automatizaciones. Se pueden **leer** para sacar ideas o **copiar** a tu máquina. Lo verás en la práctica de "
+        "los dashboards.",
     ])
     E.cajon(doc, "¡OJO!", "Lo que se sube a un repositorio **público** lo ve todo el mundo, y borrarlo después no lo "
-                          "borra del historial. **Antes de cada `git push`**, mira con `git status` qué vas a subir.")
-    videos(doc, "El curso de Git y GitHub desde cero de **MoureDev** (Brais Moure) lo explica muy bien y con calma. "
-                "No hace falta verlo entero: ve a la lección que necesites.", [
-        ("Lección 6 · git init (36:47)", t(GIT, 0, 36, 47)),
-        ("Lección 8 · git add y git commit (45:21)", t(GIT, 0, 45, 21)),
-        ("Lección 9 · git log y git status (53:27)", t(GIT, 0, 54, 21)),
-        ("Lección 10 · git checkout y git reset: volver atrás (57:48)", t(GIT, 0, 57, 48)),
-        ("Lección 12 · el fichero .gitignore (1:05:05)", t(GIT, 1, 5, 5)),
-        ("Lección 13 · git diff (1:09:04)", t(GIT, 1, 9, 4)),
-        ("Lección 23 · introducción a GitHub (2:22:27)", t(GIT, 2, 22, 27)),
-        ("Lección 26 · local y remoto (2:42:40)", t(GIT, 2, 42, 40)),
-        ("Lecciones 32 y 33 · git clone y git push (3:16:41)", t(GIT, 3, 16, 41)),
-        ("Lección 34 · fork en GitHub (3:21:31)", t(GIT, 3, 21, 31)),
+                          "borra del historial. **Antes de subir nada**, pregunta a la IA qué ficheros van a subirse y míralos.")
+    videos(doc, "git es complicado y casi todo nos queda fuera. Del curso de Git y GitHub de **MoureDev** (Brais "
+                "Moure), que dura cinco horas, **solo necesitas una lección**: la 8, donde explica `git add` y "
+                "`git commit`. Es lo único que usamos, y aun así lo ejecuta la IA; verla te sirve para entender qué "
+                "está haciendo.", [
+        ("Lección 8 · git add y git commit (minuto 45:21, unos ocho minutos)", t(GIT, 0, 45, 21)),
     ])
 
     # ================================================================== 3 MCP (fuente única: gen_ia_mcp.py)
@@ -416,6 +414,11 @@ def main():
     ], anchos_cm=[2.6, 5.6, 4.3, 4.5], negrita_col0=True, tam=9)
     E.cajon(doc, "IDEA CLAVE", "MCP y skills **se complementan**. Con MCP la IA **puede** crear una automatización; con "
                                "una skill **sabe hacerla bien**, como la haría alguien con experiencia en Home Assistant.")
+
+    E.cajon(doc, "¿POR QUÉ?", "**¿Qué vamos a hacer con las skills? Usarlas, no fabricarlas.** Crear skills con ficheros de "
+                              "apoyo y programas **nos queda fuera**. En clase usamos las que **ya vienen hechas** (la guía "
+                              "de buenas prácticas de ha-mcp) y nos basta con entender **qué son** y **cuándo las usa la "
+                              "IA**, para saber pedírselo y notar cuándo se la ha saltado.")
 
     E.h2(doc, "4.2 Cómo es por dentro")
     E.bloque_codigo(doc, "---\n"
@@ -464,19 +467,16 @@ def main():
     E.lista(doc, [
         "**De otros.** Hay colecciones públicas de skills en GitHub. Para usar una, se **copia su carpeta** a "
         "`.opencode/skills/`.",
-        "**Tuyas.** Cuando te veas explicándole a la IA **lo mismo por tercera vez**, escríbelo en una skill. Empieza "
-        "por una corta: cinco pasos claros valen más que dos páginas.",
+        "**Tuyas.** Una skill sencilla, como la del ejemplo, es solo un fichero de texto con pasos. Si te ves "
+        "explicándole a la IA **lo mismo por tercera vez**, puedes pedirle que lo escriba como skill.",
     ])
     E.cajon(doc, "¡OJO!", "Una skill son **órdenes que la IA va a obedecer**, y puede traer programas (*scripts*) que "
                           "se ejecutan en tu máquina. **Léela entera antes de instalarla** y usa solo las de sitios de "
                           "confianza. Una skill maliciosa puede pedirle a la IA que borre ficheros o que mande tus datos fuera.")
-    videos(doc, "El taller de *Agent Skills* desde cero de **MoureDev** enseña a crearlas y a usarlas en varios agentes, "
-                "opencode entre ellos.", [
-        ("Qué es una skill y cómo funciona (5:11)", t(SKL, 0, 5, 11)),
-        ("Tu primera skill desde cero: anatomía, invocación y parámetros (22:42)", t(SKL, 0, 22, 42)),
-        ("Skills avanzadas: referencias, recursos y scripts (52:13)", t(SKL, 0, 52, 13)),
-        ("Usar las skills en todos los agentes, también en opencode (1:04:24)", t(SKL, 1, 4, 24)),
-        ("Skills de terceros: gestores y recursos (1:19:02)", t(SKL, 1, 19, 2)),
+    videos(doc, "Del taller de *Agent Skills* de **MoureDev** solo nos interesan dos trozos: **qué es una skill** y "
+                "**cómo se usan las de otros**. El resto (crearlas desde cero, referencias, scripts) no lo usamos.", [
+        ("Qué es una skill y cómo funciona (minuto 5:11)", t(SKL, 0, 5, 11)),
+        ("Skills de terceros: gestores y recursos (minuto 1:19:02)", t(SKL, 1, 19, 2)),
     ])
 
     # ================================================================== 5 VIBECODING
@@ -550,14 +550,14 @@ def main():
         "¿Qué puede ver opencode cuando está en HA y qué puede ver cuando está en tu PC?",
         "Di tres cosas que nunca hay que escribirle a un modelo gratuito y por qué.",
         "¿Para qué sirve el agente Plan? ¿Por qué se usa antes que Build?",
-        "¿Qué hace `/undo`? ¿Y `/new`?",
+        "¿Qué hace `/undo`? ¿Y `/new`? ¿Cuándo usas cada una?",
         "Escribe una buena petición para que la IA te diga por qué no se enciende la tira RGB.",
         "¿Qué es un commit y qué cinco cosas guarda?",
-        "Ordena: `git commit`, `git add`, `git status`. ¿Qué hace cada una?",
+        "¿Cuáles son las dos órdenes de git que usamos, en qué orden van y quién las ejecuta normalmente?",
         "Mejora este mensaje de commit: «cambios varios».",
-        "La IA ha estropeado `automations.yaml` y no has hecho commit. ¿Cómo lo recuperas?",
+        "La IA ha estropeado `automations.yaml` y no has hecho commit. ¿Qué le pides?",
         "¿Por qué no se guarda `secrets.yaml` en git? ¿Dónde se dice?",
-        "¿Qué diferencia hay entre git y GitHub? ¿Qué es un remoto?",
+        "Si las órdenes las ejecuta la IA, ¿para qué necesitas tú entender cómo está organizado un repositorio?",
         "¿Por qué el reset del aula también borra tu repositorio? ¿Cómo lo evitas?",
         "En clase, ¿quién es el cliente MCP y quién es el servidor MCP?",
         "Di tres cosas que la IA puede hacer con ha-mcp y no con el servidor MCP oficial de HA.",
@@ -569,11 +569,12 @@ def main():
     ])
 
     E.h1(doc, "Para saber más")
-    E.parrafo(doc, "Vídeos del canal **MoureDev**, de Brais Moure: es técnico y explica con mucha claridad. Úsalos "
-                   "cuando te atasques o quieras ir más lejos que estos apuntes.")
-    for texto, url in [("Curso completo de Git y GitHub desde cero para principiantes", GIT),
+    E.parrafo(doc, "Para clase te basta con los trozos enlazados en cada apartado. Si quieres **ir más lejos por tu "
+                   "cuenta**, estos son los vídeos completos del canal **MoureDev**, de Brais Moure: es técnico y "
+                   "explica con mucha claridad.")
+    for texto, url in [("Curso completo de Git y GitHub desde cero (cinco horas; de clase, solo la lección 8)", GIT),
                        ("Taller de Agent Skills desde cero: Claude Code, OpenCode, Codex, Cursor, VS Code…", SKL),
-                       ("Otro vídeo recomendado (minuto 31:37)", V3)]:
+                       ("El vídeo enlazado en el apartado de opencode", "https://www.youtube.com/watch?v=aDJNG_f2C3E")]:
         p = E.parrafo(doc, "▶  ", alineacion="izquierda")
         enlace(p, texto, url, tam=10.5)
     E.nota(doc, "Documentación oficial: opencode.ai/docs · home-assistant.io/integrations/mcp_server · "
